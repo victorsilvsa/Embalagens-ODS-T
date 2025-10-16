@@ -428,7 +428,7 @@ function verificarLogin() {
 const bruteForceProtection = {
     tentativas: {},
     maxTentativas: 3,
-    tempoBloqueioPorTentativa: 30000, // 30 segundos base
+    tempoBloqueioPorTentativa: 10000, // 30 segundos base
 
     verificarTentativas(usuario) {
         const agora = Date.now();
@@ -475,7 +475,7 @@ const bruteForceProtection = {
 };
 
 const sessionProtection = {
-    tempoExpiracao: 30 * 60 * 1000, // 30 minutos
+    tempoExpiracao: Infinity, // 30 minutos
 
     criarSessaoSegura(usuario) {
         const agora = Date.now();
@@ -7725,4 +7725,5 @@ document.querySelectorAll("select").forEach(el => {
       el.scrollIntoView({behavior: "smooth", block: "center"});
     }, 300);
   });
+
 });
