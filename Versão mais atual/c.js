@@ -7727,22 +7727,6 @@ document.querySelectorAll("select").forEach(el => {
   });
 
 });
-// Impede seleção e highlight em todos os inputs ao tocar
-document.addEventListener('DOMContentLoaded', function() {
-  const inputs = document.querySelectorAll('input, textarea, select');
-  
-  inputs.forEach(function(input) {
-    input.addEventListener('touchstart', function(e) {
-      e.preventDefault(); // Impede o comportamento padrão de toque
-      this.style.webkitTapHighlightColor = 'transparent'; // Remove highlight
-      this.style.webkitUserSelect = 'none'; // Impede seleção
-    });
-    
-    // Opcional: Remove foco ao tocar fora
-    input.addEventListener('blur', function() {
-      this.style.outline = 'none';
-    });
-  });
-});
+
 
 
