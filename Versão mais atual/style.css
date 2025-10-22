@@ -1,20 +1,3 @@
-/* Desabilita o highlight de toque em todos os elementos (incluindo inputs) */
-* {
-  -webkit-tap-highlight-color: transparent; /* Remove a listra laranja no iOS/Android */
-  -webkit-user-select: none; /* Impede seleção de texto/elemento */
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-/* Específico para inputs, se quiser reforçar */
-input, textarea, select {
-  -webkit-tap-highlight-color: transparent;
-  -webkit-user-select: none;
-  outline: none; /* Remove qualquer outline padrão */
-  border: none; /* Opcional: remove borda se quiser um visual limpo */
-}
-
 
         /* Scrollbar simples e leve */
          .custom-scrollbar {
@@ -1123,3 +1106,4 @@ select:focus {
   box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
 
 }
+
