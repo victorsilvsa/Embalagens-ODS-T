@@ -7709,49 +7709,9 @@ async function arquivarMes() {
         mostrarToast("Erro ao arquivar mês!", "error");
     }
 }
-// Debounce para evitar chamadas excessivas
-function debounce(fn, delay = 300) {
-    let timer;
-    return (...args) => {
-        clearTimeout(timer);
-        timer = setTimeout(() => fn(...args), delay);
-    };
-}
 
-// Função que liga eventos em todos os inputs da página
-function inicializarTodosInputs() {
-    const inputs = document.querySelectorAll('input, select, textarea');
 
-    inputs.forEach(input => {
-        // Tipos que precisam de debounce
-        if (
-            input.type === "text" ||
-            input.type === "number" ||
-            input.type === "email" ||
-            input.type === "password" ||
-            input.tagName === "TEXTAREA"
-        ) {
-            input.addEventListener("input", debounce(() => {
-                // dispara evento personalizado que suas funções já podem ouvir
-                input.dispatchEvent(new Event("valorAtualizado"));
-            }, 300));
-        } 
-        // Tipos que atualizam direto
-        else {
-            input.addEventListener("change", () => {
-                input.dispatchEvent(new Event("valorAtualizado"));
-            });
-        }
-    });
-}
 
-document.querySelectorAll("select").forEach(el => {
-  el.addEventListener("focus", () => {
-    setTimeout(() => {
-      el.scrollIntoView({behavior: "smooth", block: "center"});
-    }, 300);
-  });
 
-});
 
 
