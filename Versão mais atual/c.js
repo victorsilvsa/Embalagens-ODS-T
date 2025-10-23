@@ -1011,6 +1011,7 @@ function atualizarHora() {
     const now = new Date();
     document.getElementById('currentTime').textContent =
         now.toLocaleDateString('pt-BR') + ' ' + now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        carregarMinhasOS()
 }
 
 function podeAcessarTab(tabName) {
@@ -2044,6 +2045,7 @@ function atualizarStep() {
     if (currentStep === totalSteps) {
         atualizarResumo();
     }
+    
 }
 
 function validarStepAtual() {
@@ -2133,11 +2135,50 @@ function validarStepsAnteriores(targetStep) {
     return true;
 }
 
+// Carregar dados salvos ao abrir a página
+window.addEventListener('load', () => {
+    const savedData = localStorage.getItem('osFormData');
+    if (savedData) {
+        const data = JSON.parse(savedData);
+        document.getElementById('solicitante').value = data.solicitante || '';
+        document.getElementById('setor').value = data.setor || '';
+        document.getElementById('equipamento').value = data.equipamento || '';
+        document.getElementById('localizacao').value = data.localizacao || '';
+        document.getElementById('tipoServico').value = data.tipoServico || '';
+        document.getElementById('tecnico').value = data.tecnico || '';
+        document.getElementById('prioridade').value = data.prioridade || 'media';
+        document.getElementById('descricao').value = data.descricao || '';
+        document.getElementById('materiais').value = data.materiais || '';
+        document.getElementById('observacoes').value = data.observacoes || '';
+        document.getElementById('contatoSolicitante').value = data.contatoSolicitante || '';
+        document.getElementById('numeroSerie').value = data.numeroSerie || '';
+    }
+});
+
+// Salvar formulário no localStorage sempre que o usuário digitar algo
+document.getElementById('osForm').addEventListener('input', () => {
+    const formData = {
+        solicitante: document.getElementById('solicitante').value,
+        setor: document.getElementById('setor').value,
+        equipamento: document.getElementById('equipamento').value,
+        localizacao: document.getElementById('localizacao').value,
+        tipoServico: document.getElementById('tipoServico').value,
+        tecnico: document.getElementById('tecnico').value,
+        prioridade: document.getElementById('prioridade').value,
+        descricao: document.getElementById('descricao').value,
+        materiais: document.getElementById('materiais').value,
+        observacoes: document.getElementById('observacoes').value,
+        contatoSolicitante: document.getElementById('contatoSolicitante').value,
+        numeroSerie: document.getElementById('numeroSerie').value
+    };
+    localStorage.setItem('osFormData', JSON.stringify(formData));
+});
+
+// Submissão do formulário
 document.getElementById('osForm').addEventListener('submit', function (e) {
     e.preventDefault();
 
     const tecnicoId = parseInt(document.getElementById('tecnico').value);
-
     const tecnicoSelect = document.getElementById('tecnico');
 
     const novaOS = {
@@ -2148,7 +2189,7 @@ document.getElementById('osForm').addEventListener('submit', function (e) {
         localizacao: document.getElementById('localizacao').value,
         tipoServico: document.getElementById('tipoServico').value,
         tecnicoId: tecnicoId,
-        tecnicoNome: tecnicoSelect.selectedOptions[0]?.textContent || null, // 🔹 salva o nome também
+        tecnicoNome: tecnicoSelect.selectedOptions[0]?.textContent || null,
         prioridade: document.getElementById('prioridade').value,
         descricao: document.getElementById('descricao').value,
         materiais: document.getElementById('materiais').value,
@@ -2156,7 +2197,7 @@ document.getElementById('osForm').addEventListener('submit', function (e) {
         contatoSolicitante: document.getElementById('contatoSolicitante').value,
         numeroSerie: document.getElementById('numeroSerie').value,
         status: 'pendente',
-        dataAbertura: new Date().toISOString(), // 🔹 use este sempre
+        dataAbertura: new Date().toISOString(),
         dataInicio: null,
         dataConclusao: null,
         relatorioServico: null,
@@ -2168,7 +2209,6 @@ document.getElementById('osForm').addEventListener('submit', function (e) {
     ordensServico.push(novaOS);
     salvarDados();
 
-    limparForm();
     mostrarToast(`OS #${novaOS.id} criada com sucesso!`, 'success');
 
     // 📌 Redirecionamento por tipo de usuário
@@ -2180,7 +2220,6 @@ document.getElementById('osForm').addEventListener('submit', function (e) {
         carregarMinhasOS();
         showTab('mecanico');
     } else if (usuarioLogado.tipo === 'funcionario') {
-        // Fica na aba "nova" e prepara para próxima OS
         currentStep = 1;
         atualizarStep();
         atualizarProximoNumero();
@@ -2188,19 +2227,6 @@ document.getElementById('osForm').addEventListener('submit', function (e) {
     }
 });
 
-
-function limparForm() {
-    document.getElementById('osForm').reset();
-    document.getElementById('prioridade').value = 'media';
-
-    // Resetar para o primeiro step
-    currentStep = 1;
-    atualizarStep();
-    atualizarProximoNumero();
-
-    // Limpar resumo
-    document.getElementById('resumoOS').innerHTML = '';
-}
 
 function atualizarDashboard() {
     let osParaContar = ordensServico;
@@ -7727,6 +7753,5 @@ document.querySelectorAll("select").forEach(el => {
   });
 
 });
-
 
 
