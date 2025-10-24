@@ -667,6 +667,11 @@
             <!-- Nova OS -->
             <div id="nova" class="tab-content hidden">
                 <!-- Header da Nova OS -->
+                 <button onclick="abrirModalOSRapida()" 
+  class="fixed bottom-6 right-6 bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-4 rounded-full shadow-xl hover:scale-110 transition-all duration-300">
+  <i class="fas fa-bolt text-xl"></i>
+</button>
+
                 <div
                     class="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 rounded-3xl p-8 mb-8 text-white shadow-2xl relative overflow-hidden">
                     <!-- Background Pattern -->
@@ -2485,6 +2490,97 @@
             </div>
         </div>
 
+    <!-- MODAL OS RÁPIDA -->
+    <div id="modalOSRapida" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full overflow-y-auto max-h-[90vh] custom-scrollbar">
+
+        <!-- Cabeçalho -->
+        <div class="bg-gradient-to-r from-blue-700 via-blue-800 to-indigo-800 text-white px-6 py-4 rounded-t-2xl flex justify-between items-center">
+        <h2 class="text-xl font-bold flex items-center gap-2">
+            <i class="fas fa-bolt text-yellow-300"></i> OS Rápida
+        </h2>
+        <button onclick="fecharModalOSRapida()" class="text-white hover:bg-white/20 p-2 rounded-lg">
+            <i class="fas fa-times"></i>
+        </button>
+        </div>
+
+        <!-- Formulário -->
+    <form id="osFormRapida" class="p-6 space-y-6">
+        
+    <!-- Solicitante e Setor -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+        <label class="text-sm font-semibold text-gray-700">
+            <i class="fas fa-user mr-2 text-blue-500"></i>Solicitante *
+        </label>
+        <input id="solicitanteRapida" type="text" readonly
+            class="w-full p-4 border-2 border-gray-200 rounded-xl bg-gray-100 text-gray-600 cursor-not-allowed">
+        </div>
+
+        <div>
+        <label class="text-sm font-semibold text-gray-700">
+            <i class="fas fa-industry mr-2 text-green-500"></i>Setor *
+        </label>
+        <select id="setor" required
+            class="w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-600 bg-gray-50 focus:bg-white">
+            <option value="">Selecione o setor</option>
+            <option value="Extrusora Balão">🎈 Extrusora Balão</option>
+            <option value="Extrusora Flat">📄 Extrusora Flat</option>
+            <option value="Bobinadeira">🌀 Bobinadeira</option>
+            <option value="SSM">⚡ SSM</option>
+            <option value="GI-PP">⚙️ GI-PP</option>
+            <option value="Nylon">🧵 Nylon</option>
+            <option value="Máquina de corte">✂️ Máquina de corte</option>
+            <option value="Barracão XV">🏭 Barracão XV</option>
+            <option value="Prensa">🔨 Prensa</option>
+            <option value="Outros">➕ Outros</option>
+        </select>
+        </div>
+    </div>
+
+    <!-- Equipamento -->
+    <div>
+        <label class="text-sm font-semibold text-gray-700">
+        <i class="fas fa-cogs mr-2 text-blue-500"></i>Equipamento *
+        </label>
+        <input id="equipamentoRapido" type="text" required
+        class="w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-600 bg-gray-50 focus:bg-white"
+        placeholder="Ex: Nome do que está com defeito, Ex: Extrusora Flat, Lâmpada, etc...">
+    </div>
+
+    <!-- Técnico -->
+    <div>
+        <label class="text-sm font-semibold text-gray-700">
+        <i class="fas fa-user-cog mr-2 text-purple-500"></i>Técnico Responsável *
+        </label>
+        <select id="tecnicoRapida" required
+        class="w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-600 bg-gray-50 focus:bg-white">
+        <option value="">Carregando técnicos...</option>
+        </select>
+    </div>
+
+    <!-- Descrição -->
+    <div>
+        <label class="text-sm font-semibold text-gray-700">
+        <i class="fas fa-file-alt mr-2 text-indigo-500"></i>Descrição *
+        </label>
+        <textarea id="descricaoRapida" required rows="4"
+        class="w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-600 bg-gray-50 focus:bg-white resize-none"
+        placeholder="Descreva o problema de forma breve e direta..."></textarea>
+    </div>
+
+    <!-- Botões -->
+    <div class="flex justify-end gap-4 pt-4 border-t border-gray-200">
+        <button type="button" onclick="fecharModalOSRapida()"
+        class="px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white rounded-xl font-medium transition-all">
+        Cancelar
+        </button>
+        <button type="submit"
+        class="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl font-medium transition-all">
+        Criar OS
+        </button>
+    </div>
+    </form>
 
         <script src="c.js"></script>
         <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'979c14ca4078d94e',t:'MTc1Njk3NDE2OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
@@ -2493,4 +2589,3 @@
 </body>
 
 </html>
-
