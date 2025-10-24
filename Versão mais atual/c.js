@@ -1237,15 +1237,18 @@ document.getElementById('adminForm').addEventListener('submit', function (e) {
     mostrarToast('Administrador criado com sucesso!');
 });
 
-function carregarTecnicos() {
-    const select = document.getElementById('tecnico');
+
+function carregarTecnicos(selectOverride = null) {
+    const select = selectOverride || document.getElementById('tecnico');
+    if (!select) return;
+
     select.innerHTML = '<option value="">Selecione um técnico</option>';
 
-    tecnicos.forEach(tecnico => {
-        const option = document.createElement('option');
-        option.value = tecnico.id;
-        option.textContent = `${tecnico.nome} - ${tecnico.especialidade}`;
-        select.appendChild(option);
+    tecnicos.forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t.id;
+        opt.textContent = t.nome;
+        select.appendChild(opt);
     });
 }
 
@@ -7709,9 +7712,72 @@ async function arquivarMes() {
         mostrarToast("Erro ao arquivar mês!", "error");
     }
 }
+// === MODAL OS RÁPIDA ===
 
+// Abre o modal de OS rápida
+function abrirModalOSRapida() {
+    if (!usuarioLogado) {
+        mostrarToast('Você precisa estar logado!', 'error');
+        return;
+    }
 
+    const modal = document.getElementById('modalOSRapida');
+    modal.classList.remove('hidden');
 
+    // Aguarda o modal renderizar antes de preencher os campos
+    setTimeout(() => {
+        const inputSolicitante = document.getElementById('solicitanteRapida');
+        const selectTecnico = document.getElementById('tecnicoRapida');
 
+        if (inputSolicitante) inputSolicitante.value = usuarioLogado.nome || '';
 
+        // Chama sua função real que carrega os técnicos
+        carregarTecnicos(selectTecnico);
+    }, 200);
+}
 
+// Fecha o modal
+function fecharModalOSRapida() {
+    const modal = document.getElementById('modalOSRapida');
+    modal.classList.add('hidden');
+    document.getElementById('osFormRapida').reset();
+}
+
+// Submete OS rápida
+document.getElementById('osFormRapida').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const tecnicoSelect = document.getElementById('tecnicoRapida');
+    const novaOS = {
+        id: proximoId++,
+        solicitante: document.getElementById('solicitanteRapida').value,
+         setor: this.querySelector('#setor').value,
+        equipamento: document.getElementById('equipamentoRapido').value, // ✅ corrigido
+        localizacao: '', // removido do modal
+        tipoServico: '', // removido do modal
+        tecnicoId: parseInt(tecnicoSelect.value),
+        tecnicoNome: tecnicoSelect.selectedOptions[0]?.textContent || null,
+        prioridade: 'media',
+        descricao: document.getElementById('descricaoRapida').value, // ✅ corrigido
+        materiais: '',
+        observacoes: '',
+        contatoSolicitante: '',
+        numeroSerie: '',
+        status: 'pendente',
+        dataAbertura: new Date().toISOString(),
+        criadoPor: usuarioLogado.nome
+    };
+
+    ordensServico.push(novaOS);
+    salvarDados();
+    mostrarToast(`OS #${novaOS.id} criada com sucesso!`, 'success');
+    fecharModalOSRapida();
+
+    // Atualiza telas conforme o tipo de usuário
+    if (usuarioLogado.tipo === 'admin') {
+        atualizarDashboard();
+        atualizarGraficos();
+    } else if (usuarioLogado.tipo === 'mecanico') {
+        carregarMinhasOS();
+    }
+});
