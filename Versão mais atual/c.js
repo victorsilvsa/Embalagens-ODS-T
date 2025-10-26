@@ -7781,3 +7781,9 @@ document.getElementById('osFormRapida').addEventListener('submit', function (e) 
         carregarMinhasOS();
     }
 });
+document.querySelectorAll('select').forEach(select => {
+  select.addEventListener('touchstart', e => {
+    e.stopPropagation();
+    document.body.style.overflow = 'auto';
+  });
+});
