@@ -1,16 +1,3 @@
-html,
-body {
-    -webkit-overflow-scrolling: touch;
-    touch-action: auto;
-    overflow-y: auto !important;
-}
-
-select {
-  -webkit-appearance: menulist !important;
-  appearance: menulist !important;
-  position: relative;
-  z-index: 9999;
-}
 
  
 /* Scrollbar simples e leve */
@@ -1164,3 +1151,4 @@ select:focus {
     box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
 
 }
+
