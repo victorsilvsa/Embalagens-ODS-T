@@ -6,9 +6,12 @@ body {
 }
 
 select {
-    -webkit-appearance: menulist !important;
-    z-index: 9999;
+  -webkit-appearance: menulist !important;
+  appearance: menulist !important;
+  position: relative;
+  z-index: 9999;
 }
+
  
 /* Scrollbar simples e leve */
 .custom-scrollbar {
