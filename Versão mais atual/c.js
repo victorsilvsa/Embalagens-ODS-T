@@ -869,10 +869,6 @@ function configurarInterface() {
                 <i class="fas fa-user-shield block mb-1"></i>
                 <span>Solicitar ADM</span>
             </button>
-            <button onclick="showTab('notas')" class="tab-btn flex-1 py-3 text-center text-xs text-gray-500">
-                <i class="fas fa-sticky-note block mb-1"></i>
-                <span>Notas</span>
-            </button>
             <button onclick="showTab('config')" class="tab-btn flex-1 py-3 text-center text-xs text-gray-500">
                 <i class="fas fa-cog block mb-1"></i>
                 <span>Config</span>
@@ -7780,10 +7776,4 @@ document.getElementById('osFormRapida').addEventListener('submit', function (e) 
     } else if (usuarioLogado.tipo === 'mecanico') {
         carregarMinhasOS();
     }
-});
-document.querySelectorAll('select').forEach(select => {
-  select.addEventListener('touchstart', e => {
-    e.stopPropagation();
-    document.body.style.overflow = 'auto';
-  });
 });
